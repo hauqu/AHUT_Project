@@ -126,6 +126,8 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="bing.h" />
+    <ClInclude Include="che.h" />
     <ClInclude Include="chess.h" />
     <ClInclude Include="jiang.h" />
     <ClInclude Include="ma.h" />

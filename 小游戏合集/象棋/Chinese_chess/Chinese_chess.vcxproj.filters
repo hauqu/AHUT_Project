@@ -35,6 +35,12 @@
     <ClInclude Include="ma.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="che.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="bing.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="show.jpg">

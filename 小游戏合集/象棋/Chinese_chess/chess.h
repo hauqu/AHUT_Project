@@ -9,8 +9,18 @@
 
 
 */
+#include<vector>
+class point2
+{
+public:
+	int x;
+	int y;
+	point2(int a,int b)
+	{
+		x = a; y = b;
+	}
 
-
+};
 //0 红 1 黑，黑色在上 ，红色在下
 class chess
 {
