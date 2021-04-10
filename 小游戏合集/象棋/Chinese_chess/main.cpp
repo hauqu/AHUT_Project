@@ -1,12 +1,15 @@
 #include<graphics.h>
 #include<iostream>
+#include<string>
 #include"Map.h"
+using namespace std;
 void DrawLine();
 void DrawChess();
 int w = 9; int h = 9;
 int k = 80;
 Map game;
 IMAGE chessp[32];
+void loadImage();
 int main()
 {
 	initgraph(w*k+200, h*k+200);
@@ -66,6 +69,14 @@ void DrawChess()
 				setfillcolor(RED);
 			fillcircle(x, y, k / 2);
 		}
+		
+	}
+}
+void loadImage()
+{
+	for (size_t i = 0; i < 32; i++)
+	{
+		string path = "Resources/chess/" + to_string(i) + ".jpg";
 		
 	}
 }

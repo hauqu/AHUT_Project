@@ -20,25 +20,16 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="chess.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="jiang.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="shi.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="xiang.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="ma.h">
+    <ClInclude Include="bing.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="che.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="bing.h">
+    <ClInclude Include="jiang.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ma.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Map.h">
@@ -47,10 +38,11 @@
     <ClInclude Include="pao.h">
       <Filter>头文件</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="show.jpg">
-      <Filter>资源文件</Filter>
-    </Image>
+    <ClInclude Include="shi.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="xiang.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
