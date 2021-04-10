@@ -131,6 +131,8 @@
     <ClInclude Include="chess.h" />
     <ClInclude Include="jiang.h" />
     <ClInclude Include="ma.h" />
+    <ClInclude Include="Map.h" />
+    <ClInclude Include="pao.h" />
     <ClInclude Include="shi.h" />
     <ClInclude Include="xiang.h" />
   </ItemGroup>

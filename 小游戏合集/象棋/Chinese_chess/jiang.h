@@ -64,6 +64,8 @@ jiang::jiang(bool player)
 		homeRow = BlackHomeRow;
 		homeCol = BlackHomeCol;
 		this->y = homeCol-1;
+		
+
 	}
 	else
 	{

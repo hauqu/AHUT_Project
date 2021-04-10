@@ -22,12 +22,25 @@ public:
 
 };
 //0 红 1 黑，黑色在上 ，红色在下
+
+enum class CHESS
+{
+	b_jiang=0,
+	b_shi1,b_xiang1,b_ma1,b_che1,b_pao1,
+	b_shi2, b_xiang2, b_ma2, b_che2, b_pao2,
+	b_bing1, b_bing2, b_bing3, b_bing4, b_bing5,
+	r_jiang,
+	r_shi1, r_xiang1, r_ma1, r_che1, r_pao1,
+	r_shi2, r_xiang2, r_ma2, r_che2, r_pao2,
+	r_bing1, r_bing2, r_bing3, r_bing4, r_bing5,
+};
 class chess
 {
 public:
 	int x; int y;
 	bool alive;
 	bool player;
+
 public:
 	virtual bool move(int i,int j)= 0;
 	//传递的内容为玩家指定的任意位置，不做边界处理
