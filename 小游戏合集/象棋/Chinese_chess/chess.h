@@ -10,6 +10,8 @@
 
 */
 #include<vector>
+#include<string>
+using namespace std;
 class point2
 {
 public:
@@ -34,6 +36,8 @@ enum class CHESS
 	r_shi2, r_xiang2, r_ma2, r_che2, r_pao2,
 	r_bing1, r_bing2, r_bing3, r_bing4, r_bing5,
 };
+
+
 class chess
 {
 public:
@@ -57,6 +61,7 @@ public:
 	static  int BlackHomeCol;//黑方主场中心
 	static  int BlackRiverCol;//界河
 	static  int RedRiverCol;//界河
+
 };
 
 int  chess::MapRow = 9;

@@ -1,75 +1,90 @@
-#include<graphics.h>
+#include<opencv2/highgui.hpp>
+#include<opencv2/imgcodecs.hpp>
+#include<opencv2/imgproc.hpp>
+
 #include<iostream>
-#include<string>
 #include"Map.h"
 using namespace std;
-void DrawLine();
-void DrawChess();
+using namespace cv;
+void DrawLine(Mat img);
+void DrawChess(Mat img);
 int w = 9; int h = 9;
 int k = 80;
+
+int ox=100;int oy=100;
 Map game;
-IMAGE chessp[32];
+Mat chessp[32];
+Mat chessImg(w* k + 200, h* k + 200, CV_8UC3);
 void loadImage();
+MouseCallback ms;
+void moveImage();
+
 int main()
 {
-	initgraph(w*k+200, h*k+200);
-	setorigin(100, 100);
-	setbkcolor(RGB(128, 128, 64));
-	cleardevice();
+	
+	
+	DrawLine(chessImg);
+	DrawChess(chessImg);
 
-
-	DrawLine();
-	DrawChess();
+	imshow("game", chessImg);
+	
+	waitKey(0);
 	std::cin.get();
 	return 0;
 }
-void DrawLine()
+void DrawLine(Mat img)
 {
 	for (int i = 0; i < w; i++)
 	{
-		line(k * i, 0, k * i, (h /2)* k);
-		line(k * i, (h/2+1) * k, k * i, h * k);
+		line(img,Point( k * i+ox, 0+oy),Point( k * i + ox, (h /2)* k+oy),Scalar(0,0,0));
+		line(img, Point(k * i + ox, (h / 2 + 1) * k + oy), Point(k * i + ox, h * k + oy), Scalar(0, 0, 0));
 	}
-	line(k *(w-1), (h / 2) * k, k * (w-1), (h / 2+1)*k);
-	line(0, (h / 2) * k, 0, (h / 2 + 1) * k);
+	line(img, Point(k * (w - 1) + ox, (h / 2) * k + oy), Point(k * (w - 1) + ox, (h / 2 + 1) * k + oy), Scalar(0, 0, 0));
+	line(img, Point(0 + ox, (h / 2) * k + oy) , Point(0 + ox, (h / 2 + 1) * k + oy), Scalar(0, 0, 0));
+	
 	for (int i = 0; i <= h; i++)
 	{
-		line(0, k * i, (w-1) * k,k*i);
+		line(img, Point(0 + ox, k * i + oy), Point((w - 1) * k + ox, k * i + oy), Scalar(0, 0, 0));
 	}
 
-	line(4 * k, k, 5 * k, 0);
-	line(4 * k, k, 3 * k, 0);
+	line(img, Point(4 * k + ox, k + oy),Point(5 * k + ox, 0 + oy), Scalar(0, 0, 0));
+	line(img, Point(4 * k + ox, k + oy),Point(3 * k + ox, 0 + oy), Scalar(0, 0, 0));
 
-	line(4 * k, k, 5 * k, k * 2);
-	line(4 * k, k, 3 * k, k * 2);
+	line(img, Point(4 * k + ox, k + oy), Point(5 * k + ox, k * 2 + oy), Scalar(0, 0, 0));
+	line(img, Point(4 * k + ox, k + oy), Point(3 * k + ox, k * 2 + oy), Scalar(0, 0, 0));
 
-	line(4 * k, 8 * k, 5 * k, k * 7);
-	line(4 * k, 8 * k, 3 * k, k * 7);
+	line(img, Point(4 * k + ox, 8*k + oy), Point(5 * k + ox, k * 7 + oy), Scalar(0, 0, 0));
+	line(img, Point(4 * k + ox, 8*k + oy), Point(3 * k + ox, k * 7 + oy), Scalar(0, 0, 0));
 
-	line(4 * k, 8*k, 5 * k, k * 9);
-	line(4 * k, 8*k, 3 * k, k * 9);
+	line(img, Point(4 * k + ox, 8 * k + oy), Point(5 * k + ox, k * 9 + oy), Scalar(0, 0, 0));
+	line(img, Point(4 * k + ox, 8 * k + oy), Point(3 * k + ox, k * 9 + oy), Scalar(0, 0, 0));
 
-
+	
 }
 
-void DrawChess()
+void DrawChess(Mat img)
 {
-	
-
-	int x; int y;
+	int x, y;
 	for (int i = 0; i < 32; i++)
 	{
-		if (game.cs[i] != nullptr)
+		if(game.cs[i]!=nullptr)
 		{
-			x = game.cs[i]->x*k;
-			y = game.cs[i]->y*k;
-			if (game.cs[i]->player)
-				setfillcolor(BLACK);
-			else
-				setfillcolor(RED);
-			fillcircle(x, y, k / 2);
+			x = game.cs[i]->x;
+			y = game.cs[i]->y;
+			circle(img, Point(x * k + ox, y * k + oy), k / 2, Scalar(128, 128, 128), FILLED);
+			if(game.cs[i]->player)
+			{
+				circle(img, Point(x * k + ox, y * k + oy), k / 2 - 5, Scalar(0, 0, 0),FILLED);
+				
+			}else 
+			{
+				circle(img, Point(x * k + ox, y * k + oy), k / 2 - 5, Scalar(0, 0, 255), FILLED);
+			}
+			
+			putText(img, game.csName[i], Point(x * k + ox-40, y * k + oy+10),
+				FONT_HERSHEY_DUPLEX, 0.8, Scalar(255, 255, 255), 0.5);
 		}
-		
+
 	}
 }
 void loadImage()

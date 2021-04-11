@@ -17,6 +17,7 @@ public:
 	~Map();
 public:
 	vector<chess*>cs;
+	vector<string>csName;
 private:
 
 };
@@ -64,6 +65,15 @@ Map::Map()
 	cs[(int)CHESS::r_bing3] = new bing(0, 4, 6);
 	cs[(int)CHESS::r_bing4] = new bing(0, 6, 6);
 	cs[(int)CHESS::r_bing5] = new bing(0, 8, 6);
+	csName =
+	{
+		"jiang","=shi=","xiang","-ma*","&che&","|pao/",
+				"=shi=","xiang","-ma*","&che&","|pao/",
+				"|bin#","|bin#","|bin#","|bin#","|bin#",
+		"shuai","=shi=","xiang","-ma*","&che&","|pao/",
+				"=shi=","xiang","-ma*","&che&","|pao/",
+				"|zu-|","|zu-|","|zu-|","|zu-|","|zu-|"
+	};
 	
 }
 

@@ -15,7 +15,10 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
+    <ClCompile Include="demo_mouseEvent.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="drawCircle.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

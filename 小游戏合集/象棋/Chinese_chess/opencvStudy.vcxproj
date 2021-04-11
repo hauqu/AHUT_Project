@@ -19,7 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp" />
+    <ClCompile Include="demo_mouseEvent.cpp" />
+    <ClCompile Include="drawCircle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bing.h" />
