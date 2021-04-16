@@ -19,18 +19,18 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="demo_mouseEvent.cpp" />
-    <ClCompile Include="drawCircle.cpp" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="bing.h" />
     <ClInclude Include="che.h" />
+    <ClInclude Include="chess.h" />
     <ClInclude Include="jiang.h" />
     <ClInclude Include="ma.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="pao.h" />
     <ClInclude Include="shi.h" />
     <ClInclude Include="xiang.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

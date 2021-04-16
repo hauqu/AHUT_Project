@@ -29,10 +29,14 @@ public:
 			{
 				if(x==i)
 				{
-					if(y==j-1)
+					if (y == j - 1)
 					{
 						return true;
 					}
+					else return false;
+				}else
+				{
+					return false;
 				}
 			}else
 			{
@@ -54,11 +58,35 @@ public:
 		{
 			if (y > BlackRiverCol)
 			{
-
+				if (x == i)
+				{
+					if (y == j + 1)
+					{
+						return true;
+					}
+					else return false;
+				}
+				else
+				{
+					return false;
+				}
 			}//Î´¹ýºÓ
 			else
 			{
-
+				if (x == i)
+				{
+					if (y == j + 1)
+					{
+						return true;
+					}
+				}
+				else if (y == j)
+				{
+					if (x == i - 1 || x == i + 1)
+					{
+						return true;
+					}
+				}
 			}
 		}
 	}

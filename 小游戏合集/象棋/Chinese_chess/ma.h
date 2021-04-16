@@ -30,9 +30,9 @@ public:
 		ps.push_back(point2(x + 2, y - 1));
 		ps.push_back(point2(x - 2, y + 1));
 		ps.push_back(point2(x - 2, y - 1));
-		for (int i = 0; i < ps.size(); i++)
+		for (int k= 0; k < ps.size(); k++)
 		{
-			if (ps[i].x == i && ps[i].y == j)
+			if (ps[k].x == i && ps[k].y == j)
 				return true;
 		}
 		return false;

@@ -1,5 +1,6 @@
 #include <opencv2/opencv.hpp>
 using namespace cv;
+using namespace std;
 #define WINDOW_NAME "【鼠标操作】"
 //--------------------【全局函数声明部分】---------------------
 //     描述：全局函数的声明
@@ -59,11 +60,13 @@ void on_MouseHandle(int event, int x, int y, int flags, void* param)
 	{
 		g_bDrawingBox = true;
 		g_rectangle = Rect(x, y, 0, 0);   //记录起点
+		cout << "(" << x << "," << y << ")"<<endl;
 	}
 	break;
 	//左键抬起消息
 	case EVENT_LBUTTONUP:
 	{
+		cout << "(" << x << "," << y << ")" << endl;
 		// 标识符为false
 		g_bDrawingBox = false;
 		//对宽和高小于0的处理

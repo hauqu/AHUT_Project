@@ -15,14 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="demo_mouseEvent.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="drawCircle.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="bing.h">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -47,5 +39,13 @@
     <ClInclude Include="xiang.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="chess.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

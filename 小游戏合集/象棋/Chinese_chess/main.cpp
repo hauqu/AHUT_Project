@@ -8,6 +8,7 @@ using namespace std;
 using namespace cv;
 void DrawLine(Mat img);
 void DrawChess(Mat img);
+string WinName = "chess";
 int w = 9; int h = 9;
 int k = 80;
 
@@ -15,20 +16,58 @@ int ox=100;int oy=100;
 Map game;
 Mat chessp[32];
 Mat chessImg(w* k + 200, h* k + 200, CV_8UC3);
+Mat tempImg;
 void loadImage();
-MouseCallback ms;
-void moveImage();
+
+Point firstStep,secondStep;
+bool first, second;
+
+void on_MouseHandle(int event, int x, int y, int flags, void* param);
 
 int main()
 {
-	
-	
 	DrawLine(chessImg);
 	DrawChess(chessImg);
+	chessImg.copyTo(tempImg);
+	namedWindow(WinName);
+	setMouseCallback(WinName, on_MouseHandle, (void*)&tempImg);
 
-	imshow("game", chessImg);
+	while (true)
+	{
+		if (first)
+		{
+			int ci = game.findChess(firstStep.x, firstStep.y);
+			if (ci!=-1)
+			{
+				if(second)
+				{
+					int cj =game.findChess(secondStep.x,secondStep.y);
+					if(game.cs[ci]->move(secondStep.x, secondStep.y))
+					{
+						game.cs[ci]->x = secondStep.x;
+						game.cs[ci]->y = secondStep.y;
+						first = false;
+						second = false;
+
+						tempImg = Mat(w * k + 200, h * k + 200, CV_8UC3);
+
+						DrawLine(tempImg);
+						DrawChess(tempImg);
+						
+						
+					}
+				}
+			}
+		}
+		imshow(WinName, tempImg);
+		if(waitKey(10)==27)
+			break;
+	}
 	
-	waitKey(0);
+
+	
+	
+	
 	std::cin.get();
 	return 0;
 }
@@ -93,5 +132,59 @@ void loadImage()
 	{
 		string path = "Resources/chess/" + to_string(i) + ".jpg";
 		
+	}
+}
+
+void on_MouseHandle(int event, int x, int y, int flags, void* param)
+{
+	Mat& image = *(Mat*)param;
+	Point step;
+	switch (event)
+	{
+	case EVENT_MOUSEMOVE:
+	{
+
+		//cout << "(" << x << "," << y << ")" << endl;
+	}
+	break;
+	// 左键按下消息
+	case EVENT_LBUTTONDOWN:
+	{
+		DrawLine(tempImg);
+		DrawChess(tempImg);
+		//cout << "(" << x << "," << y << ")" << endl;
+		
+		step = Point((x-ox+k/2)/k, (y-oy+k/2)/k);
+		cout << "(" << step.x << "," << step.y << ")" << endl;
+		rectangle(tempImg, Rect(step.x*k+ox-k/2, step.y*k+oy-k/2, k, k), Scalar(0, 0, 255));
+		imshow(WinName, tempImg);
+	}
+	break;
+	//左键抬起消息
+	case EVENT_LBUTTONUP:
+	{
+		step = Point((x - ox + k / 2) / k, (y - oy + k / 2) / k);
+		if (!first)
+		{
+			firstStep = step;
+			first = true;
+		}else
+		{
+			secondStep = step;
+			second = true;
+		}
+	}
+	break;
+	case EVENT_RBUTTONDOWN:
+	{
+		if (second)
+		{
+			second = false;
+		}else if(first)
+		{
+			first = false;
+		}
+	}
+	break;
 	}
 }

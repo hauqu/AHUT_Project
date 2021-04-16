@@ -6,7 +6,9 @@
 #include"bing.h"
 #include"pao.h"
 #include"xiang.h"
+
 using std::vector;
+
 class Map
 {
 
@@ -18,12 +20,15 @@ public:
 public:
 	vector<chess*>cs;
 	vector<string>csName;
+public:
+	int findChess(int i, int j);
 private:
 
 };
 
 Map::Map()
 {
+	
 	cs.resize(32, nullptr);//32¸öÆå×Ó
 
 	cs[(int)CHESS::b_jiang] = new jiang(1);
@@ -80,4 +85,18 @@ Map::Map()
 Map::~Map()
 {
 	
+}
+inline int Map::findChess(int x, int y)
+{
+	for (int i = 0; i < 32; i++)
+	{
+		if(cs[i]!=nullptr)
+		{
+			if (cs[i]->x==x&&cs[i]->y==y)
+			{
+				return  i;
+			}
+		}
+	}
+	return -1;
 }
