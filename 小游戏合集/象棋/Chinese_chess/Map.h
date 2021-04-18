@@ -22,6 +22,7 @@ public:
 	vector<string>csName;
 public:
 	int findChess(int i, int j);
+	bool moveChess(int x1, int y1, int x2, int y2);
 private:
 
 };
@@ -99,4 +100,110 @@ inline int Map::findChess(int x, int y)
 		}
 	}
 	return -1;
+}
+
+inline bool Map::moveChess(int x1, int y1, int x2, int y2)
+{
+
+	int c1 = findChess(x1, y1);
+	int c2 = findChess(x2, y2);
+	bool m =cs[c1]->move(x2,y2);
+	if (m == false) return false;//移动方式非法
+	
+	if (c1!=-1)
+	{
+		CHESS cc = (CHESS)c1;
+		switch (cc)
+		{
+		case CHESS::b_jiang:
+			break;
+		case CHESS::b_shi1:
+			break;
+		case CHESS::b_xiang1:
+			break;
+		case CHESS::b_ma1:
+			break;
+		case CHESS::b_che1:
+			//路程中间不能有 阻挡
+			if(x1==x2)
+			{
+				bool cm = true;
+				for (int i = x1+1; i <x2 ; i++)
+				{
+					 if(findChess(i, y1)!=-1)
+					 {
+						 cm = false;
+					 }
+				}
+				if (cm==false)
+				{
+					return false;
+				}
+			}else if(y1 ==y2)
+			{
+
+			}
+			break;
+		case CHESS::b_pao1:
+			break;
+		case CHESS::b_shi2:
+			break;
+		case CHESS::b_xiang2:
+			break;
+		case CHESS::b_ma2:
+			break;
+		case CHESS::b_che2:
+			break;
+		case CHESS::b_pao2:
+			break;
+		case CHESS::b_bing1:
+			break;
+		case CHESS::b_bing2:
+			break;
+		case CHESS::b_bing3:
+			break;
+		case CHESS::b_bing4:
+			break;
+		case CHESS::b_bing5:
+			break;
+		case CHESS::r_jiang:
+			break;
+		case CHESS::r_shi1:
+			break;
+		case CHESS::r_xiang1:
+			break;
+		case CHESS::r_ma1:
+			break;
+		case CHESS::r_che1:
+			break;
+		case CHESS::r_pao1:
+			break;
+		case CHESS::r_shi2:
+			break;
+		case CHESS::r_xiang2:
+			break;
+		case CHESS::r_ma2:
+			break;
+		case CHESS::r_che2:
+			break;
+		case CHESS::r_pao2:
+			break;
+		case CHESS::r_bing1:
+			break;
+		case CHESS::r_bing2:
+			break;
+		case CHESS::r_bing3:
+			break;
+		case CHESS::r_bing4:
+			break;
+		case CHESS::r_bing5:
+			break;
+		default:
+			break;
+		}
+	}else 
+	{
+		return false;
+	}
+	return false;
 }

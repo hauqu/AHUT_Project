@@ -46,13 +46,15 @@ public:
 					{
 						return true;
 					}
+					return false;
 				}else if(y==j)
 				{
-					if (x == i - 1||x==i+1)
+					if (x == i - 1 || x == i + 1)
 					{
 						return true;
-					}
+					}return false;
 				}
+				return false;
 			}
 		}else//ºì·½
 		{
@@ -79,6 +81,7 @@ public:
 					{
 						return true;
 					}
+					else return false;
 				}
 				else if (y == j)
 				{
@@ -86,7 +89,8 @@ public:
 					{
 						return true;
 					}
-				}
+					else return false;
+				} return false;
 			}
 		}
 	}

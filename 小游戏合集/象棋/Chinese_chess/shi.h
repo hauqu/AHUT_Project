@@ -10,7 +10,7 @@
 class shi :public chess
 {
 	/*
-	在大本营移动，一次一格
+	在大本营移动，一次一格，斜着
 	*/
 public:
 	int homeRow;
@@ -23,7 +23,7 @@ public:
 
 	virtual bool move(int i, int j)
 	{
-
+		vector<point2>ps;
 		//一次一格，必须在固定区域
 		if (i > homeRow + 1 || i < homeRow - 1)
 			return false;
@@ -31,27 +31,17 @@ public:
 			return false;
 		if (i == x && j == y) return false;//需要告知自己能不能踩到自己
 		//区域限定
-
-		if (i == x)
+		ps.push_back(point2(x + 1, y + 1));
+		ps.push_back(point2(x + 1, y - 1));
+		ps.push_back(point2(x - 1, y + 1));
+		ps.push_back(point2(x - 1, y - 1));
+		for (int k = 0; k < ps.size(); k++)
 		{
-			if (j == y + 1 || j == y - 1)
-			{
+			if (ps[k].x == i && ps[k].y == j)
 				return true;
-			}
-			else
-				return false;
 		}
-		else if (j == y)
-		{
-			if (i == x + 1 || i == x - 1)
-			{
-				return true;
-			}
-			else
-				return false;
-		}
-		return false;
 		//一次一格
+		return false;
 	}
 
 };
