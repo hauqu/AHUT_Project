@@ -6,7 +6,7 @@
 #include"bing.h"
 #include"pao.h"
 #include"xiang.h"
-
+#include<algorithm>
 using std::vector;
 
 class Map
@@ -92,7 +92,7 @@ inline int Map::findChess(int x, int y)
 {
 	for (int i = 0; i < 33; i++)
 	{
-		if(cs[i]!=nullptr)
+		if(cs[i]!=nullptr&&cs[i]->alive)
 		{
 			if (cs[i]->x==x&&cs[i]->y==y)
 			{
@@ -110,95 +110,108 @@ inline bool Map::moveChess(int x1, int y1, int x2, int y2)
 	int c2 = findChess(x2, y2);
 	bool m =cs[c1]->move(x2,y2);
 	if (m == false) return false;//移动方式非法
-	
+	bool cm = true; int cn = -1;
 	if (c1!=-1)
 	{
 		CHESS cc = (CHESS)c1;
 		switch (cc)
 		{
-		case CHESS::b_jiang:
+		
+		case CHESS::r_pao2:
+		case CHESS::r_pao1:
+		case CHESS::b_pao2:
+		case CHESS::b_pao1:
+			//当中间空地 可以，当中间有一个 可以吃
+			cn = 0;//说明选中炮
+			if (x1 == x2)
+			{
+				int b = min(y1, y2);
+				int e = max(y1, y2);
+				for (int i = b + 1; i < e; i++)
+				{
+					if (findChess(x1, i) != -1)
+						cn++;
+				}
+			}
+			else if (y1 == y2)
+			{
+				int b = min(x1, x2);
+				int e = max(x1, x2);
+				for (int i = b + 1; i < e; i++)
+				{
+					if (findChess(i, y1) != -1)
+					{
+						cn++;
+					}
+				}
+			}
+			if (cn != 1 && cn != 0)
+				cm = false;
 			break;
-		case CHESS::b_shi1:
-			break;
-		case CHESS::b_xiang1:
-			break;
-		case CHESS::b_ma1:
-			break;
+		case CHESS::r_che1:
 		case CHESS::b_che1:
+		case CHESS::b_che2:
+		case CHESS::r_che2:
 			//路程中间不能有 阻挡
 			if(x1==x2)
 			{
-				bool cm = true;
-				for (int i = x1+1; i <x2 ; i++)
+				
+				int b = min(y1, y2);
+				int e = max(y1, y2);
+				for (int i = b+1; i < e; i++)
 				{
-					 if(findChess(i, y1)!=-1)
-					 {
-						 cm = false;
-					 }
+					if(findChess(x1,i)!=-1)
+					{
+						cm = false;
+					}
 				}
-				if (cm==false)
-				{
-					return false;
-				}
+				//没有被阻挡
+
 			}else if(y1 ==y2)
 			{
-
+				int b = min(x1, x2);
+				int e = max(x1, x2);
+				for (int i = b + 1; i < e; i++)
+				{
+					if (findChess(i, y1) != -1)
+					{
+						cm = false;
+					}
+				}
 			}
 			break;
-		case CHESS::b_pao1:
-			break;
-		case CHESS::b_shi2:
-			break;
+	
 		case CHESS::b_xiang2:
-			break;
-		case CHESS::b_ma2:
-			break;
-		case CHESS::b_che2:
-			break;
-		case CHESS::b_pao2:
-			break;
-		case CHESS::b_bing1:
-			break;
-		case CHESS::b_bing2:
-			break;
-		case CHESS::b_bing3:
-			break;
-		case CHESS::b_bing4:
-			break;
-		case CHESS::b_bing5:
-			break;
-		case CHESS::r_jiang:
-			break;
-		case CHESS::r_shi1:
-			break;
+		case CHESS::b_xiang1:
 		case CHESS::r_xiang1:
-			break;
-		case CHESS::r_ma1:
-			break;
-		case CHESS::r_che1:
-			break;
-		case CHESS::r_pao1:
-			break;
-		case CHESS::r_shi2:
-			break;
 		case CHESS::r_xiang2:
 			break;
+		case CHESS::b_ma2:
+		case CHESS::r_ma1:
 		case CHESS::r_ma2:
+		case CHESS::b_ma1:
 			break;
-		case CHESS::r_che2:
-			break;
-		case CHESS::r_pao2:
-			break;
+		case CHESS::b_jiang:
+		case CHESS::r_jiang:
+		case CHESS::b_shi2:
+		case CHESS::b_shi1:
+		case CHESS::r_shi1:
+		case CHESS::r_shi2:
+
+		case CHESS::b_bing1:		
+		case CHESS::b_bing2:		
+		case CHESS::b_bing3:
+		case CHESS::b_bing4:
+		case CHESS::b_bing5:
+
 		case CHESS::r_bing1:
-			break;
 		case CHESS::r_bing2:
-			break;
 		case CHESS::r_bing3:
-			break;
 		case CHESS::r_bing4:
-			break;
 		case CHESS::r_bing5:
 			break;
+		
+	
 		default:
 			break;
 		}
@@ -206,5 +219,54 @@ inline bool Map::moveChess(int x1, int y1, int x2, int y2)
 	{
 		return false;
 	}
+	// 选中可移动物体，且目标点可移动
+	if (cm!=true)
+	{
+		return false;//
+	}
+	if (c2==-1)//目标点为空
+	{
+		if (cn!=-1)//炮移动
+		{
+			if (cn == 0)
+			{
+				this->cs[c1]->x = x2;
+				this->cs[c1]->y = y2;
+				return true;
+			}
+			else return false;
+		}
+		else {
+			this->cs[c1]->x = x2;
+			this->cs[c1]->y = y2;
+			return true;
+		}
+	}else 
+	{
+		if (cs[c1]->player != cs[c2]->player)//吃掉对方棋子
+		{
+			if(cn!=-1)//炮吃子
+			{
+				if (cn == 1)
+				{
+					cs[c2]->alive = false;
+					this->cs[c1]->x = x2;
+					this->cs[c1]->y = y2;
+					return true;
+				}
+				else return false;//没有炮架失败
+			}
+			else {
+				cs[c2]->alive = false;
+
+				this->cs[c1]->x = x2;
+				this->cs[c1]->y = y2;
+				return true;
+			}
+		}
+		else return false;
+	}
+
+
 	return false;
 }

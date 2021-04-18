@@ -38,39 +38,37 @@ int main()
 
 	while (true)
 	{
+		
 		if (first)
 		{
-			int ci = game.findChess(firstStep.x, firstStep.y);
-			if (ci != -1)
+			if (second)
 			{
-				if (second)
+				bool is = game.moveChess(firstStep.x, firstStep.y, secondStep.x, secondStep.y);
+				tempImg = Mat(w * k + k, h * k, CV_8UC3);
+				DrawLine(tempImg);
+				DrawChess(tempImg);
+				if (is)
 				{
-					int cj = game.findChess(secondStep.x, secondStep.y);
-					if (game.cs[ci]->move(secondStep.x, secondStep.y))
-					{
-						game.cs[ci]->x = secondStep.x;
-						game.cs[ci]->y = secondStep.y;
-						first = false;
-						second = false;
-
-						tempImg = Mat(w * k + k, h * k, CV_8UC3);
-
-						DrawLine(tempImg);
-						DrawChess(tempImg);
-
-
-					}
+					cout << "成功" << endl;
 				}
+				else
+				{
+					cout << "失败" << endl;
+				}
+				second = false;
+				first = false;
+
 			}
+
+
 		}
+			
+		
 		imshow(WinName, tempImg);
 		if (waitKey(10) == 27)
 			break;
 	}
-
-
-
-
+	
 
 	std::cin.get();
 	return 0;
@@ -109,7 +107,7 @@ void DrawChess(Mat img)
 	int x, y;
 	for (int i = 1; i < 33; i++)
 	{
-		if (game.cs[i] != nullptr)
+		if (game.cs[i]->alive!=false)
 		{
 			x = game.cs[i]->x;
 			y = game.cs[i]->y;
@@ -145,6 +143,11 @@ void on_MouseHandle(int event, int x, int y, int flags, void* param)
 	Point step;
 	switch (event)
 	{
+
+		if (x<k||y<k)
+		{
+			break;
+		}
 	case EVENT_MOUSEMOVE:
 	{
 
@@ -154,12 +157,13 @@ void on_MouseHandle(int event, int x, int y, int flags, void* param)
 	// 左键按下消息
 	case EVENT_LBUTTONDOWN:
 	{
-		DrawLine(tempImg);
-		DrawChess(tempImg);
+		//DrawLine(tempImg);
+		//DrawChess(tempImg);
 		//cout << "(" << x << "," << y << ")" << endl;
 
 		step = Point((x   + k / 2) / k, (y   + k / 2) / k);
-		cout << "(" << step.x << "," << step.y << ")" << endl;
+		cout << "(" << step.x << "," << step.y << ")-->" ;
+		
 		rectangle(tempImg, Rect(step.x * k   - k / 2, step.y * k   - k / 2, k, k), Scalar(0, 0, 255));
 		imshow(WinName, tempImg);
 	}
@@ -172,12 +176,21 @@ void on_MouseHandle(int event, int x, int y, int flags, void* param)
 		{
 			firstStep = step;
 			first = true;
+			if (game.findChess(step.x,step.y)==-1)
+			{
+				first = false;
+			}
+			
 		}
 		else
 		{
 			secondStep = step;
 			second = true;
 		}
+
+		if (second)
+			cout << endl;
+
 	}
 	break;
 	case EVENT_RBUTTONDOWN:
