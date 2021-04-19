@@ -138,6 +138,7 @@
     <ClInclude Include="ma.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="pao.h" />
+    <ClInclude Include="Server.h" />
     <ClInclude Include="shi.h" />
     <ClInclude Include="xiang.h" />
   </ItemGroup>
