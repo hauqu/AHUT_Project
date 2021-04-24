@@ -135,6 +135,7 @@
     <ClInclude Include="che.h" />
     <ClInclude Include="chess.h" />
     <ClInclude Include="jiang.h" />
+    <ClInclude Include="Link.h" />
     <ClInclude Include="ma.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="pao.h" />
