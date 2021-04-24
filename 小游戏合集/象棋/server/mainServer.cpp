@@ -10,7 +10,7 @@
 #include<iostream>
 #include"Map.h"
 #include"Server.h"
-//#include"Server.h"
+
 
 
 int w = 10; int h = 10;
@@ -21,54 +21,33 @@ using namespace cv;
 Map game;
 
 Mat chessImg;
-Mat tempImg;
+
 string WinName = "chess";
 
-Point firstStep, secondStep;
-bool first, second;
 
 void DrawLine(Mat img);
 void DrawChess(Mat img);
-void on_MouseHandle(int event, int x, int y, int flags, void* param);
+
 
 int main()
 {
 	chessImg = Mat(w * k + k, h * k, CV_8UC3);
 	DrawLine(chessImg);
 	DrawChess(chessImg);
-	chessImg.copyTo(tempImg);
 	namedWindow(WinName);
-	setMouseCallback(WinName, on_MouseHandle, (void*)&tempImg);
+	Server mainServer = Server(12345);
+	while (true)
+	{
+		if(mainServer.players.size()==2)
+		{
+			break;//由两个玩家，nice
+		}
+	}
 
 	while (true)
 	{
 
-		if (first)
-		{
-			if (second)
-			{
-				bool is = game.moveChess(firstStep.x, firstStep.y, secondStep.x, secondStep.y);
-				tempImg = Mat(w * k + k, h * k, CV_8UC3);
-				DrawLine(tempImg);
-				DrawChess(tempImg);
-				if (is)
-				{
-					cout << "成功" << endl;
-				}
-				else
-				{
-					cout << "失败" << endl;
-				}
-				second = false;
-				first = false;
-
-			}
-
-
-		}
-
-
-		imshow(WinName, tempImg);
+		imshow(WinName, chessImg);
 		if (waitKey(10) == 27)
 			break;
 	}
@@ -133,7 +112,7 @@ void DrawChess(Mat img)
 	}
 }
 
-
+/*
 void on_MouseHandle(int event, int x, int y, int flags, void* param)
 {
 	Mat& image = *(Mat*)param;
@@ -204,3 +183,4 @@ void on_MouseHandle(int event, int x, int y, int flags, void* param)
 	break;
 	}
 }
+*/

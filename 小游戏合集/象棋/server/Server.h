@@ -105,7 +105,7 @@ inline void StartListen(Server& ser)
 		cout << "成功打开监听" << endl;
 	}
 	
-	while (true)
+	while (ser.players.size()<ser.MAX_LINK)
 	{
 		SOCKET sClient;
 		sockaddr_in remoteAddr;
@@ -133,6 +133,7 @@ inline void StartListen(Server& ser)
 			
 		}
 		this_thread::sleep_for(100ms);
+		
 	}
 }
 void communicate(Link& l)

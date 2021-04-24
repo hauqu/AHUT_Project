@@ -134,6 +134,7 @@
     <ClInclude Include="bing.h" />
     <ClInclude Include="che.h" />
     <ClInclude Include="chess.h" />
+    <ClInclude Include="DataStruct.h" />
     <ClInclude Include="jiang.h" />
     <ClInclude Include="Link.h" />
     <ClInclude Include="ma.h" />
