@@ -128,7 +128,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="serverGame.cpp" />
+    <ClCompile Include="mainServer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bing.h" />

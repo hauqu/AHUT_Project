@@ -5,19 +5,23 @@ thread listenServer 用于 循环监听建立连接
 通过 Link 通信，由线程LinkServer 启动 communicate 将数据存储到 Link 对象中
 
 */
-#define _WINSOCK_DEPRECATED_NO_WARNINGS //头文件升级原因导致原有函数报错，加上这句忽略报错
+#define _WINSOCK_DEPRECATED_NO_WARNINGS 
+//头文件升级原因导致原有函数报错，加上这句忽略报错
 #include <stdio.h>
-
 #include<iostream>
 #include<thread>
 #include<vector>
 #include<string>
 #include"Link.h"
 #pragma comment(lib,"ws2_32.lib")  //使用socket必须加载库
+
+
+/*
+using std::vector;
+using std::cout;
+using std::endl;
+*/
 using namespace std;
-
-
-
 
 void communicate(Link& l);
 
@@ -74,7 +78,7 @@ inline Server::Server(u_short port)
 	sin.sin_family = AF_INET;
 	sin.sin_port = htons(port);
 	sin.sin_addr.S_un.S_addr = INADDR_ANY;
-	if (bind(slisten, (LPSOCKADDR)&sin, sizeof(sin)) == SOCKET_ERROR)
+	if (::bind(slisten, (LPSOCKADDR)&sin, sizeof(sin)) == SOCKET_ERROR)
 	{
 		cout << "服务端套接字绑定失败 " << endl;
 	}
