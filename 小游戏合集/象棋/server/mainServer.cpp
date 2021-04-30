@@ -10,7 +10,7 @@
 #include<iostream>
 #include"Map.h"
 #include"Server.h"
-
+#include"DataStruct.h"
 
 
 int w = 10; int h = 10;
@@ -21,13 +21,16 @@ using namespace cv;
 Map game;
 
 Mat chessImg;
-
+bool control = true;
 string WinName = "chess";
 
 
 void DrawLine(Mat img);
 void DrawChess(Mat img);
 
+
+DataStruct pr;
+DataStruct pb;
 
 int main()
 {
@@ -40,14 +43,64 @@ int main()
 	{
 		if(mainServer.players.size()==2)
 		{
-			break;//由两个玩家，nice
+			break;//有两个玩家，nice
 		}
+		this_thread::sleep_for(0.5s);
 	}
-
+	imshow(WinName, chessImg);
+	
 	while (true)
 	{
+		
+		if (control==true)
+		{
+			
+			while (true)
+			{
+				mainServer.players[0]->recvR();//允许接收
+				if (mainServer.players[0]->r.empty())
+				{
+					continue;//没有数据，继续等待
+				}
+				pb = DataStruct(mainServer.players[0]->r);
+				mainServer.players[0]->r = "";
+				//接收成功，清空
+				if (game.moveChess(pb.x1, pb.y1, pb.x2, pb.y2))
+				{
+					control = !control;//命令有效
+					mainServer.players[0]->sendS("1");
+					break;
+				}
+				else
+				{
+					mainServer.players[0]->sendS("0");
+				}
+			}
+		}
+		else if(control==false)
+		{
+			while (true)
+			{
+				mainServer.players[1]->recvR();//允许接收
+				if (mainServer.players[1]->r.empty())
+				{
+					continue;//没有数据，继续等待
+				}
+				pb = DataStruct(mainServer.players[0]->r);
+				mainServer.players[1]->r = "";
+				if (game.moveChess(pr.x1, pr.y1, pr.x2, pr.y2))
+				{
+					control = !control;//命令有效
+					mainServer.players[1]->sendS("1");
+					break;
+				}
+				else
+				{
+					mainServer.players[1]->sendS("0");
+				}
+			}
+		}
 
-		imshow(WinName, chessImg);
 		if (waitKey(10) == 27)
 			break;
 	}
@@ -111,6 +164,8 @@ void DrawChess(Mat img)
 
 	}
 }
+
+
 
 /*
 void on_MouseHandle(int event, int x, int y, int flags, void* param)

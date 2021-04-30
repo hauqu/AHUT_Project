@@ -5,6 +5,7 @@ using std::string;
 class DataStruct
 {
 public:
+	int id;
 	int x1, y1;
 	int x2, y2;
 public:
